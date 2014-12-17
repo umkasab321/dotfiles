@@ -6,10 +6,14 @@ set wildmenu wildmode=list:full
 set title
 set showmatch
 syntax on
-"set cindent
+set autoindent
+set shiftwidth=4
+set softtabstop=4
+set cindent
 set ignorecase
 set smartcase
 set wrapscan
+inoremap { {}<left>
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -24,27 +28,19 @@ nnoremap sj <C-w>+
 nnoremap sk <C-w>-
 nnoremap sl <C-w>>
 nnoremap sh <C-w><
+nnoremap fd <S-v>%zf 
 set tabstop=4
 set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
-set ttymouse=xterm
-set matchpairs+={:}
-"C++----------------------------------------------
-function! s:cpp()
-	setlocal matchpairs+=<:>
-	setlocal matchpairs+=[:]
-endfunction
-
-augroup vimrc-cpp
-	autocmd!
-	autocmd FileType cpp call s:cpp()
-augroup END
+set ttymouse=xterm2
 
 "vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
 
 "考え中のこと
 "escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
 "insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
+"neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
+
 
 "------------------------------------------------------------------
 "Neo Bundle Setting
@@ -68,6 +64,16 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kana/vim-submode'
 NeoBundle "Shougo/neocomplete.vim"
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+  \ }
+NeoBundle "Shougo/vimshell"
+
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
 
