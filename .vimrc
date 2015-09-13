@@ -13,7 +13,9 @@ set cindent
 set ignorecase
 set smartcase
 set wrapscan
-inoremap { {}<left>
+inoremap { {}<Left><LF><LF><Up> 
+inoremap ( ()
+inoremap [ []
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -35,11 +37,11 @@ set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
 set ttymouse=xterm2
 
-"vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
-
-"考え中のこと
-"escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
-"insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
+" vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
+"
+" 考え中のこと
+" escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
+" insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
 "neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
 
 
@@ -75,6 +77,7 @@ NeoBundle 'Shougo/vimproc', {
   \ }
 NeoBundle "Shougo/vimshell"
 NeoBundle 'tpope/vim-fugitive' 
+NeoBundle 'tomtom/tcomment_vim' 
 
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
