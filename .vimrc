@@ -24,6 +24,7 @@ inoremap <S-j> J
 nnoremap <S-j> J
 nnoremap <Tab> >> 
 nnoremap <S-Tab> <<
+nnoremap ; :
 nnoremap sj <C-w>+
 nnoremap sk <C-w>-
 nnoremap sl <C-w>>
@@ -73,6 +74,7 @@ NeoBundle 'Shougo/vimproc', {
   \ },
   \ }
 NeoBundle "Shougo/vimshell"
+NeoBundle 'tpope/vim-fugitive' 
 
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -107,7 +109,7 @@ call submode#map('changetabFor', 'n', '', 't', 'gt')
 call submode#map('changetabBack', 'n', '', 'T', 'gT')
 call submode#map('changetabBack', 'n', '', 't', 'gT')
 
-"------------------------------------------------------------------
+"-------------------------------------------------------------------
 "vim-submode Setting End
 "------------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
