@@ -14,8 +14,8 @@ set ignorecase
 set smartcase
 set wrapscan
 inoremap { {}<Left><LF><LF><Up> 
-inoremap ( ()
-inoremap [ []
+"inoremap ( ()<Left>
+inoremap [ []<Left>
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -26,6 +26,10 @@ inoremap <S-j> J
 nnoremap <S-j> J
 nnoremap <Tab> >> 
 nnoremap <S-Tab> <<
+nnoremap j gj
+nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
 nnoremap ; :
 nnoremap sj <C-w>+
 nnoremap sk <C-w>-
