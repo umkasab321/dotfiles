@@ -13,9 +13,12 @@ set cindent
 set ignorecase
 set smartcase
 set wrapscan
-inoremap { {}<Left><LF><LF><Up> 
-"inoremap ( ()<Left>
-inoremap [ []<Left>
+set columns=110
+set lines=35
+set list listchars=tab:\¦\ 
+inoremap { {}<left>
+nnoremap j gj
+nnoremap k gk
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -24,30 +27,27 @@ inoremap <D-b> <esc>
 inoremap <C-e> <Delete>
 inoremap <S-j> J
 nnoremap <S-j> J
-nnoremap <Tab> >> 
+nnoremap <Tab> >>
 nnoremap <S-Tab> <<
-nnoremap j gj
-nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
-nnoremap ; :
 nnoremap sj <C-w>+
 nnoremap sk <C-w>-
 nnoremap sl <C-w>>
 nnoremap sh <C-w><
-nnoremap fd <S-v>%zf 
+nnoremap ; :
+nnoremap fd <S-v>%zf
 set tabstop=4
 set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
 set ttymouse=xterm2
 
-" vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
-"
-" 考え中のこと
-" escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
-" insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
-"neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
+"vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
 
+"考え中のこと
+"escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
+"insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
+"neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
+"コピペした時に{
+"に反応して}が入力される。}がたくさん増えてしまうので何とかしたい。
 
 "------------------------------------------------------------------
 "Neo Bundle Setting
@@ -68,8 +68,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
  " My Bundles here:
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'rbtnn/vimconsole.vim.git'
+NeoBundle 'thinca/vim-quickrun.git'
 NeoBundle "Shougo/neocomplete.vim"
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
@@ -80,8 +85,18 @@ NeoBundle 'Shougo/vimproc', {
   \ },
   \ }
 NeoBundle "Shougo/vimshell"
-NeoBundle 'tpope/vim-fugitive' 
-NeoBundle 'tomtom/tcomment_vim' 
+
+NeoBundle 'Yggdroot/indentLine'
+let g:indentLine_faster = 1
+let g:indentLine_color_term = 111
+let g:indentLine_color_gui = '#708090'
+let g:indentLine_char = '|'
+
+NeoBundle 'bronson/vim-trailing-whitespace'
+if neobundle#tap('vim-trailing-whitespace')
+	" uniteでスペースが表示されるので、設定でOFFにします。
+	let g:extra_whitespace_ignored_filetypes = ['unite']
+endif
 
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -116,7 +131,7 @@ call submode#map('changetabFor', 'n', '', 't', 'gt')
 call submode#map('changetabBack', 'n', '', 'T', 'gT')
 call submode#map('changetabBack', 'n', '', 't', 'gT')
 
-"-------------------------------------------------------------------
+"------------------------------------------------------------------
 "vim-submode Setting End
 "------------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
