@@ -73,6 +73,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'tomtom/tcomment_vim' 
 NeoBundle 'rbtnn/vimconsole.vim.git'
 NeoBundle 'thinca/vim-quickrun.git'
 NeoBundle "Shougo/neocomplete.vim"
