@@ -1,6 +1,8 @@
 set number
 set encoding=utf-8
 set cursorline
+set clipboard&
+set clipboard^=unnamedplus
 set incsearch
 set wildmenu wildmode=list:full
 set title

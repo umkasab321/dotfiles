@@ -1,12 +1,6 @@
 echo "日本語のホームディレクトリ下のディレクトリ名を英語に変更します(デスクトップ->Desktop)。"
-env LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
+#env LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
 
-
-#ノーチラスのアドレスバーをボタン式からテキスト式に変える
-echo "Nautilusのアドレスバーをボタン式からテキスト式に変更します。"
-gsettings set org.gnome.nautilus.preferences always-use-location-entry true
-
-#.xmodmap生成
 #./bashrc ./profileのバックアップを作る
 echo ".bashrcと.profileのバックアップを生成"
 cp ~/.bashrc ~/.bashrc_back
