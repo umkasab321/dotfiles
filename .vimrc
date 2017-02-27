@@ -37,6 +37,7 @@ nnoremap sl <C-w>>
 nnoremap sh <C-w><
 nnoremap ; :
 nnoremap fd <S-v>%zf
+nnoremap go :<C-u>call append(expand('.'), '')<Cr>j
 set tabstop=4
 set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
@@ -45,11 +46,7 @@ set ttymouse=xterm2
 "vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
 
 "考え中のこと
-"escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
-"insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
 "neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
-"コピペした時に{
-"に反応して}が入力される。}がたくさん増えてしまうので何とかしたい。
 
 "------------------------------------------------------------------
 "Neo Bundle Setting
@@ -69,15 +66,13 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
  " My Bundles here:
-NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
-NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kana/vim-submode'
-NeoBundle 'tomtom/tcomment_vim' 
+NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'vim-scripts/MultipleSearch'
 NeoBundle 'rbtnn/vimconsole.vim.git'
-NeoBundle 'thinca/vim-quickrun.git'
 NeoBundle "Shougo/neocomplete.vim"
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
@@ -87,7 +82,6 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-NeoBundle "Shougo/vimshell"
 
 NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_faster = 1
