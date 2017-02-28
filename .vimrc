@@ -66,6 +66,8 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
  " My Bundles here:
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
@@ -133,3 +135,42 @@ call submode#map('changetabBack', 'n', '', 't', 'gT')
 "------------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#skip_auto_completion_time = ""
+
+"------------------------------------------------------------------
+"Neoyank Setting
+"------------------------------------------------------------------
+let g:neoyank#limit
+let g:neoyank#file
+
+"------------------------------------------------------------------
+"Unite Setting
+"------------------------------------------------------------------
+"インサートモードで開始
+let g:unite_enable_start_insert=1
+"prefix keyの設定
+nmap f [unite]
+
+"Current Directory
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+"最近開いたファイルとバッファ
+nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+"最近開いたディレクトリ
+nnoremap <silent> [unite]m :<C-u>Unite<Space>directory_mru<CR>
+"Buffer
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+"Register
+nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+"Tab
+nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+"History and yank
+nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
+"スペースキーとoキーでoutline
+"outline
+nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+"file_rec:!
+nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+"Quit
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction"}}}
