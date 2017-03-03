@@ -65,15 +65,17 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
- " My Bundles here:
+" My Bundles here:
+NeoBundleLazy 'mopp/layoutplugin.vim', { 'autoload' : { 'commands' : 'LayoutPlugin'} }
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
+NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-smartchr'
 NeoBundle 'kana/vim-smartinput'
+NeoBundle 'umkasab321/RCedit'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'Yggdroot/indentLine'
@@ -149,8 +151,8 @@ let g:neocomplete#skip_auto_completion_time = ""
 "------------------------------------------------------------------
 "Neoyank Setting
 "------------------------------------------------------------------
-let g:neoyank#limit
-let g:neoyank#file
+let g:neoyank#limit  = 100
+let g:neoyank#file = $HOME.'/.cache/neoyank/history_yank'
 
 "------------------------------------------------------------------
 "Unite Setting
