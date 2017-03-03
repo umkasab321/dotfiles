@@ -72,7 +72,11 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
 NeoBundle 'kana/vim-submode'
+NeoBundle 'kana/vim-smartchr'
+NeoBundle 'kana/vim-smartinput'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'vim-scripts/MultipleSearch'
 NeoBundle 'rbtnn/vimconsole.vim.git'
 NeoBundle "Shougo/neocomplete.vim"
@@ -85,17 +89,7 @@ NeoBundle 'Shougo/vimproc', {
   \ },
   \ }
 
-NeoBundle 'Yggdroot/indentLine'
-let g:indentLine_faster = 1
-let g:indentLine_color_term = 111
-let g:indentLine_color_gui = '#708090'
-let g:indentLine_char = '|'
 
-NeoBundle 'bronson/vim-trailing-whitespace'
-if neobundle#tap('vim-trailing-whitespace')
-	" uniteでスペースが表示されるので、設定でOFFにします。
-	let g:extra_whitespace_ignored_filetypes = ['unite']
-endif
 
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -112,6 +106,22 @@ NeoBundleCheck
 "Neo Bundle Setting End
 "------------------------------------------------------------------
 "
+"------------------------------------------------------------------
+"vim-trailing-whitespac eSetting
+"------------------------------------------------------------------
+if neobundle#tap('vim-trailing-whitespace')
+	" uniteでスペースが表示されるので、設定でOFFにします。
+	let g:extra_whitespace_ignored_filetypes = ['unite']
+endif
+
+"------------------------------------------------------------------
+"indentLine Setting
+"------------------------------------------------------------------
+let g:indentLine_faster = 1
+let g:indentLine_color_term = 111
+let g:indentLine_color_gui = '#708090'
+let g:indentLine_char = '|'
+
 "------------------------------------------------------------------
 "vim-submode Setting
 "------------------------------------------------------------------
@@ -164,7 +174,6 @@ nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
 nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
 "History and yank
 nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
-"スペースキーとoキーでoutline
 "outline
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 "file_rec:!
@@ -174,3 +183,46 @@ autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction"}}}
+
+"--------------------------------------------------------------
+"Smartchr,SmartImput Config
+"--------------------------------------------------------------
+let lst = [   ['<',     "smartchr#loop(' < ', ' << ', '<')" ],
+		\ ['>',     "smartchr#loop(' > ', ' >> ', ' >>> ', '>')"],
+			\ ['+',     "smartchr#loop(' + ', ' ++ ', '+')"],
+			\ ['-',     "smartchr#loop(' - ', ' -- ', '-')"],
+			\ ['/',     "smartchr#loop(' / ', '//', '/')"],
+			\ ['&',     "smartchr#loop(' & ', ' && ', '&')"],
+			\ ['%',     "smartchr#loop(' % ', '%')"],
+			\ ['*',     "smartchr#loop(' * ', '*')"],
+			\ ['<Bar>', "smartchr#loop(' | ', ' || ', '|')"],
+			\ [',',     "smartchr#loop(', ', ',')"]]
+
+for i in lst
+	call smartinput#map_to_trigger('i', i[0], i[0], i[0])
+	call smartinput#define_rule({ 'char' : i[0], 'at' : '\%#',                                      'input' : '<C-R>=' . i[1] . '<CR>'})
+	call smartinput#define_rule({'char' : i[0], 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : i[0]})
+	call smartinput#define_rule({ 'char' : i[0], 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',  'input' : i[0] })
+endfor
+
+call smartinput#define_rule({'char' : '>', 'at' : ' < \%#', 'input' : '<BS><BS><BS><><Left>'})
+
+call smartinput#map_to_trigger('i', '=', '=', '=')
+call smartinput#define_rule({ 'char' : '=', 'at' : '\%#',                                       'input' : "<C-R>=smartchr#loop(' = ', ' == ', '=')<CR>"})
+call smartinput#define_rule({ 'char' : '=', 'at' : '[&+-/<>|] \%#',                             'input' : '<BS>= '})
+call smartinput#define_rule({ 'char' : '=', 'at' : '!\%#',                                      'input' : '= '})
+call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : '='})
+call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',   'input' : '='})
+
+call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '(\s*)\%#'   , 'input' : '<C-O>dF(<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '{\s*}\%#'   , 'input' : '<C-O>dF{<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '<\s*>\%#'   , 'input' : '<C-O>dF<<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '\[\s*\]\%#' , 'input' : '<C-O>dF[<BS>'})
+
+for op in ['<', '>', '+', '-', '/', '&', '%', '\*', '|']
+	call smartinput#define_rule({ 'char' : '<BS>' , 'at' : ' ' . op . ' \%#' , 'input' : '<BS><BS><BS>'})
+endfor
+"--------------------------------------------------------------
+"Smartchr,SmartImput Config End
+"--------------------------------------------------------------
