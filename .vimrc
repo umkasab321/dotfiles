@@ -1,9 +1,16 @@
 set number
 set encoding=utf-8
 set cursorline
-"set clipboard&
-"set clipboard^=unnamedplus
-set clipboard+=unnamed
+if has('win32')
+    let ostype = "Win"
+elseif has('mac')
+    let ostype = "Mac"
+	set clipboard+=unnamed
+else
+    let ostype = system("uname")
+	set clipboard&
+	set clipboard^=unnamedplus
+endif
 set incsearch
 set wildmenu wildmode=list:full
 set title
@@ -38,6 +45,7 @@ nnoremap sl <C-w>>
 nnoremap sh <C-w><
 nnoremap ; :
 nnoremap fd <S-v>%zf
+nnoremap go :<C-u>call append(expand('.'), '')<Cr>j
 set tabstop=4
 set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
@@ -46,11 +54,7 @@ set ttymouse=xterm2
 "vimの操作中に色を消せるコマンドが欲しい。たまに見にくい色があるから一瞬全部白にしたい。
 
 "考え中のこと
-"escをOSのキーマップ変更で再割当てして、Ctrlを使うのやめたほうがいいのでは?
-"insert modeでhjkl移動できるようにするためにShift使うと大文字HJKLが打てなくなるよう
 "neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
-"コピペした時に{
-"に反応して}が入力される。}がたくさん増えてしまうので何とかしたい。
 
 "------------------------------------------------------------------
 "Neo Bundle Setting
@@ -69,16 +73,22 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
- " My Bundles here:
-NeoBundle 'scrooloose/nerdtree'
+" My Bundles here:
+NeoBundleLazy 'mopp/layoutplugin.vim', { 'autoload' : { 'commands' : 'LayoutPlugin'} }
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
-NeoBundle 'mattn/emmet-vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'kana/vim-smartchr'
+NeoBundle 'kana/vim-smartinput'
+NeoBundle 'umkasab321/RCedit'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'vim-scripts/MultipleSearch'
 NeoBundle 'rbtnn/vimconsole.vim.git'
-NeoBundle 'thinca/vim-quickrun.git'
 NeoBundle "Shougo/neocomplete.vim"
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
@@ -88,19 +98,8 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-NeoBundle "Shougo/vimshell"
 
-NeoBundle 'Yggdroot/indentLine'
-let g:indentLine_faster = 1
-let g:indentLine_color_term = 111
-let g:indentLine_color_gui = '#708090'
-let g:indentLine_char = '|'
 
-NeoBundle 'bronson/vim-trailing-whitespace'
-if neobundle#tap('vim-trailing-whitespace')
-	" uniteでスペースが表示されるので、設定でOFFにします。
-	let g:extra_whitespace_ignored_filetypes = ['unite']
-endif
 
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -117,6 +116,22 @@ NeoBundleCheck
 "Neo Bundle Setting End
 "------------------------------------------------------------------
 "
+"------------------------------------------------------------------
+"vim-trailing-whitespac eSetting
+"------------------------------------------------------------------
+if neobundle#tap('vim-trailing-whitespace')
+	" uniteでスペースが表示されるので、設定でOFFにします。
+	let g:extra_whitespace_ignored_filetypes = ['unite']
+endif
+
+"------------------------------------------------------------------
+"indentLine Setting
+"------------------------------------------------------------------
+let g:indentLine_faster = 1
+let g:indentLine_color_term = 111
+let g:indentLine_color_gui = '#708090'
+let g:indentLine_char = '|'
+
 "------------------------------------------------------------------
 "vim-submode Setting
 "------------------------------------------------------------------
@@ -140,3 +155,84 @@ call submode#map('changetabBack', 'n', '', 't', 'gT')
 "------------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#skip_auto_completion_time = ""
+
+"------------------------------------------------------------------
+"Neoyank Setting
+"------------------------------------------------------------------
+let g:neoyank#limit  = 100
+let g:neoyank#file = $HOME.'/.cache/neoyank/history_yank'
+
+"------------------------------------------------------------------
+"Unite Setting
+"------------------------------------------------------------------
+"インサートモードで開始
+let g:unite_enable_start_insert=1
+"prefix keyの設定
+nmap f [unite]
+
+"Current Directory
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+"最近開いたファイルとバッファ
+nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+"最近開いたディレクトリ
+nnoremap <silent> [unite]m :<C-u>Unite<Space>directory_mru<CR>
+"Buffer
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+"Register
+nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+"Tab
+nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+"History and yank
+nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
+"outline
+nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+"file_rec:!
+nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+"Quit
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction"}}}
+
+"--------------------------------------------------------------
+"Smartchr,SmartImput Config
+"--------------------------------------------------------------
+let lst = [   ['<',     "smartchr#loop(' < ', ' << ', '<')" ],
+		\ ['>',     "smartchr#loop(' > ', ' >> ', ' >>> ', '>')"],
+			\ ['+',     "smartchr#loop(' + ', ' ++ ', '+')"],
+			\ ['-',     "smartchr#loop(' - ', ' -- ', '-')"],
+			\ ['/',     "smartchr#loop(' / ', '//', '/')"],
+			\ ['&',     "smartchr#loop(' & ', ' && ', '&')"],
+			\ ['%',     "smartchr#loop(' % ', '%')"],
+			\ ['*',     "smartchr#loop(' * ', '*')"],
+			\ ['<Bar>', "smartchr#loop(' | ', ' || ', '|')"],
+			\ [',',     "smartchr#loop(', ', ',')"]]
+
+for i in lst
+	call smartinput#map_to_trigger('i', i[0], i[0], i[0])
+	call smartinput#define_rule({ 'char' : i[0], 'at' : '\%#',                                      'input' : '<C-R>=' . i[1] . '<CR>'})
+	call smartinput#define_rule({'char' : i[0], 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : i[0]})
+	call smartinput#define_rule({ 'char' : i[0], 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',  'input' : i[0] })
+endfor
+
+call smartinput#define_rule({'char' : '>', 'at' : ' < \%#', 'input' : '<BS><BS><BS><><Left>'})
+
+call smartinput#map_to_trigger('i', '=', '=', '=')
+call smartinput#define_rule({ 'char' : '=', 'at' : '\%#',                                       'input' : "<C-R>=smartchr#loop(' = ', ' == ', '=')<CR>"})
+call smartinput#define_rule({ 'char' : '=', 'at' : '[&+-/<>|] \%#',                             'input' : '<BS>= '})
+call smartinput#define_rule({ 'char' : '=', 'at' : '!\%#',                                      'input' : '= '})
+call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : '='})
+call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',   'input' : '='})
+
+call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '(\s*)\%#'   , 'input' : '<C-O>dF(<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '{\s*}\%#'   , 'input' : '<C-O>dF{<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '<\s*>\%#'   , 'input' : '<C-O>dF<<BS>'})
+call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '\[\s*\]\%#' , 'input' : '<C-O>dF[<BS>'})
+
+for op in ['<', '>', '+', '-', '/', '&', '%', '\*', '|']
+	call smartinput#define_rule({ 'char' : '<BS>' , 'at' : ' ' . op . ' \%#' , 'input' : '<BS><BS><BS>'})
+endfor
+"--------------------------------------------------------------
+"Smartchr,SmartImput Config End
+"--------------------------------------------------------------

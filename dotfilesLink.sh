@@ -7,5 +7,3 @@ echo ".vimディレクトリを作成します。"
 if [ ! -e ~/.vim ]; then
     mkdir .vim
 fi
-echo "pluginディレクトリのリンクを作成します。"
-ln -sf ~/dotfiles/plugin ~/.vim/plugin
