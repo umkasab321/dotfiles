@@ -1,8 +1,9 @@
 set number
 set encoding=utf-8
 set cursorline
-set clipboard&
-set clipboard^=unnamedplus
+"set clipboard&
+"set clipboard^=unnamedplus
+set clipboard+=unnamed
 set incsearch
 set wildmenu wildmode=list:full
 set title
@@ -15,8 +16,8 @@ set cindent
 set ignorecase
 set smartcase
 set wrapscan
-set columns=110
-set lines=35
+set columns=150
+set lines=45
 set list listchars=tab:\¦\ 
 inoremap { {}<left>
 nnoremap j gj
@@ -75,7 +76,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'nathanaelkane/vim-indent-guides'                 " インデントハイライトプラグイン
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kana/vim-submode'
-NeoBundle 'tomtom/tcomment_vim' 
+NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'rbtnn/vimconsole.vim.git'
 NeoBundle 'thinca/vim-quickrun.git'
 NeoBundle "Shougo/neocomplete.vim"
