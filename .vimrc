@@ -10,6 +10,8 @@ else
     let ostype = system("uname")
 	set clipboard&
 	set clipboard^=unnamedplus
+	set columns=150
+	set lines=45
 endif
 set incsearch
 set wildmenu wildmode=list:full
@@ -23,8 +25,6 @@ set cindent
 set ignorecase
 set smartcase
 set wrapscan
-set columns=150
-set lines=45
 set list listchars=tab:\¦\ 
 inoremap { {}<left>
 nnoremap j gj
