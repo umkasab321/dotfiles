@@ -57,47 +57,72 @@ set ttymouse=xterm2
 "neocompleteで予測できるのはいいが、名前のみの表示なのが残念。関数の説明(ドキュメンテーションコメント)や引数がわかると嬉しい。
 
 "------------------------------------------------------------------
-"Neo Bundle Setting
+" Dein.vim Setting
 "------------------------------------------------------------------
-if has('vim_starting')
-    set nocompatible               " Be iMproved
-
-" Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+if &compatible
+  set nocompatible               " Be iMproved
 endif
-
+ 
 " Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
+set runtimepath+=/Users/unagi/.vim/bundles/repos/github.com/Shougo/dein.vim
+ 
 " Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+if dein#load_state('/Users/unagi/.vim/bundles')
+  call dein#begin('/Users/unagi/.vim/bundles')
+ 
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/unagi/.vim/bundles/repos/github.com/Shougo/dein.vim')
+ 
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/neoyank.vim')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('nathanaelkane/vim-indent-guides')
+  call dein#add('kana/vim-submode')
+  call dein#add('kana/vim-smartchr')
+  call dein#add('kana/vim-smartinput')
+  call dein#add('umkasab321/RCedit')
+  call dein#add('tomtom/tcomment_vim')
+  call dein#add('bronson/vim-trailing-whitespace')
+  call dein#add('Yggdroot/indentLine')
+  call dein#add('vim-scripts/MultipleSearch')
+  call dein#add('rbtnn/vimconsole.vim.git')
+  call dein#add('Shougo/neocomplete.vim')
+  call dein#add('Shougo/vimproc'), {
+	  \ 'build' : {
+		  \ 'windows' : 'make -f make_mingw32.mak',
+			  \ 'cygwin' : 'make -f make_cygwin.mak',
+			  \ 'mac' : 'make -f make_mac.mak',
+			  \ 'unix' : 'make -f make_unix.mak',
+			  \ },
+		  \ }
+
+" You can specify revision/branch/tag.
+	call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+ 
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+ 
+" Required:
+filetype plugin indent on
+syntax enable
+ 
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+ 
+"End dein Scripts-------------------------
 
 " My Bundles here:
 NeoBundleLazy 'mopp/layoutplugin.vim', { 'autoload' : { 'commands' : 'LayoutPlugin'} }
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neoyank.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'kana/vim-submode'
-NeoBundle 'kana/vim-smartchr'
-NeoBundle 'kana/vim-smartinput'
-NeoBundle 'umkasab321/RCedit'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'vim-scripts/MultipleSearch'
-NeoBundle 'rbtnn/vimconsole.vim.git'
-NeoBundle "Shougo/neocomplete.vim"
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
 
 
 
@@ -119,7 +144,7 @@ NeoBundleCheck
 "------------------------------------------------------------------
 "vim-trailing-whitespac eSetting
 "------------------------------------------------------------------
-if neobundle#tap('vim-trailing-whitespace')
+if dein#tap('vim-trailing-whitespace')
 	" uniteでスペースが表示されるので、設定でOFFにします。
 	let g:extra_whitespace_ignored_filetypes = ['unite']
 endif
