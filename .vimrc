@@ -74,7 +74,7 @@ if dein#load_state('/Users/unagi/.vim/bundles')
   " Required:
   call dein#add('/Users/unagi/.vim/bundles/repos/github.com/Shougo/dein.vim')
  
-  " Add or remove your plugins here:
+  "Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
 
