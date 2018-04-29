@@ -67,8 +67,8 @@ endif
 set runtimepath+=/Users/unagi/.vim/bundles/repos/github.com/Shougo/dein.vim
  
 " Required:
-if dein#load_state('/Users/unagi/.vim/bundles')
-  call dein#begin('/Users/unagi/.vim/bundles')
+if dein#load_state('~/.vim/bundles')
+  call dein#begin('~/.vim/bundles')
  
   " Let dein manage dein
   " Required:
