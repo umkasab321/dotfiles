@@ -93,14 +93,14 @@ if dein#load_state('/Users/unagi/.vim/bundles')
   call dein#add('vim-scripts/MultipleSearch')
   call dein#add('rbtnn/vimconsole.vim.git')
   call dein#add('Shougo/neocomplete.vim')
-  call dein#add('Shougo/vimproc'), {
-	  \ 'build' : {
-		  \ 'windows' : 'make -f make_mingw32.mak',
-			  \ 'cygwin' : 'make -f make_cygwin.mak',
-			  \ 'mac' : 'make -f make_mac.mak',
-			  \ 'unix' : 'make -f make_unix.mak',
-			  \ },
-		  \ }
+  " call dein#add('Shougo/vimproc'), {
+	"   \ 'build' : {
+	" 	  \ 'windows' : 'make -f make_mingw32.mak',
+	" 		  \ 'cygwin' : 'make -f make_cygwin.mak',
+	" 		  \ 'mac' : 'make -f make_mac.mak',
+	" 		  \ 'unix' : 'make -f make_unix.mak',
+	" 		  \ },
+	" 	  \ }
 
 " You can specify revision/branch/tag.
 "	call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -202,42 +202,42 @@ endfunction"}}}
 "--------------------------------------------------------------
 "Smartchr,SmartImput Config
 "--------------------------------------------------------------
-let lst = [   ['<',     "smartchr#loop(' < ', ' << ', '<')" ],
-		\ ['>',     "smartchr#loop(' > ', ' >> ', ' >>> ', '>')"],
-			\ ['+',     "smartchr#loop(' + ', ' ++ ', '+')"],
-			\ ['-',     "smartchr#loop(' - ', ' -- ', '-')"],
-			\ ['/',     "smartchr#loop(' / ', '//', '/')"],
-			\ ['&',     "smartchr#loop(' & ', ' && ', '&')"],
-			\ ['%',     "smartchr#loop(' % ', '%')"],
-			\ ['*',     "smartchr#loop(' * ', '*')"],
-			\ ['<Bar>', "smartchr#loop(' | ', ' || ', '|')"],
-			\ [',',     "smartchr#loop(', ', ',')"]]
-
-for i in lst
-	call smartinput#map_to_trigger('i', i[0], i[0], i[0])
-	call smartinput#define_rule({ 'char' : i[0], 'at' : '\%#',                                      'input' : '<C-R>=' . i[1] . '<CR>'})
-	call smartinput#define_rule({'char' : i[0], 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : i[0]})
-	call smartinput#define_rule({ 'char' : i[0], 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',  'input' : i[0] })
-endfor
-
-call smartinput#define_rule({'char' : '>', 'at' : ' < \%#', 'input' : '<BS><BS><BS><><Left>'})
-
-call smartinput#map_to_trigger('i', '=', '=', '=')
-call smartinput#define_rule({ 'char' : '=', 'at' : '\%#',                                       'input' : "<C-R>=smartchr#loop(' = ', ' == ', '=')<CR>"})
-call smartinput#define_rule({ 'char' : '=', 'at' : '[&+-/<>|] \%#',                             'input' : '<BS>= '})
-call smartinput#define_rule({ 'char' : '=', 'at' : '!\%#',                                      'input' : '= '})
-call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : '='})
-call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',   'input' : '='})
-
-call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
-call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '(\s*)\%#'   , 'input' : '<C-O>dF(<BS>'})
-call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '{\s*}\%#'   , 'input' : '<C-O>dF{<BS>'})
-call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '<\s*>\%#'   , 'input' : '<C-O>dF<<BS>'})
-call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '\[\s*\]\%#' , 'input' : '<C-O>dF[<BS>'})
-
-for op in ['<', '>', '+', '-', '/', '&', '%', '\*', '|']
-	call smartinput#define_rule({ 'char' : '<BS>' , 'at' : ' ' . op . ' \%#' , 'input' : '<BS><BS><BS>'})
-endfor
-"--------------------------------------------------------------
-"Smartchr,SmartImput Config End
-"--------------------------------------------------------------
+" let lst = [   ['<',     "smartchr#loop(' < ', ' << ', '<')" ],
+" 		\ ['>',     "smartchr#loop(' > ', ' >> ', ' >>> ', '>')"],
+" 			\ ['+',     "smartchr#loop(' + ', ' ++ ', '+')"],
+" 			\ ['-',     "smartchr#loop(' - ', ' -- ', '-')"],
+" 			\ ['/',     "smartchr#loop(' / ', '//', '/')"],
+" 			\ ['&',     "smartchr#loop(' & ', ' && ', '&')"],
+" 			\ ['%',     "smartchr#loop(' % ', '%')"],
+" 			\ ['*',     "smartchr#loop(' * ', '*')"],
+" 			\ ['<Bar>', "smartchr#loop(' | ', ' || ', '|')"],
+" 			\ [',',     "smartchr#loop(', ', ',')"]]
+"
+" for i in lst
+" 	call smartinput#map_to_trigger('i', i[0], i[0], i[0])
+" 	call smartinput#define_rule({ 'char' : i[0], 'at' : '\%#',                                      'input' : '<C-R>=' . i[1] . '<CR>'})
+" 	call smartinput#define_rule({'char' : i[0], 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : i[0]})
+" 	call smartinput#define_rule({ 'char' : i[0], 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',  'input' : i[0] })
+" endfor
+"
+" call smartinput#define_rule({'char' : '>', 'at' : ' < \%#', 'input' : '<BS><BS><BS><><Left>'})
+"
+" call smartinput#map_to_trigger('i', '=', '=', '=')
+" call smartinput#define_rule({ 'char' : '=', 'at' : '\%#',                                       'input' : "<C-R>=smartchr#loop(' = ', ' == ', '=')<CR>"})
+" call smartinput#define_rule({ 'char' : '=', 'at' : '[&+-/<>|] \%#',                             'input' : '<BS>= '})
+" call smartinput#define_rule({ 'char' : '=', 'at' : '!\%#',                                      'input' : '= '})
+" call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^"]*"[^"]*"\)*[^"]*"[^"]*\%#',          'input' : '='})
+" call smartinput#define_rule({ 'char' : '=', 'at' : '^\([^'']*''[^'']*''\)*[^'']*''[^'']*\%#',   'input' : '='})
+"
+" call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
+" call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '(\s*)\%#'   , 'input' : '<C-O>dF(<BS>'})
+" call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '{\s*}\%#'   , 'input' : '<C-O>dF{<BS>'})
+" call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '<\s*>\%#'   , 'input' : '<C-O>dF<<BS>'})
+" call smartinput#define_rule({ 'char' : '<BS>' , 'at' : '\[\s*\]\%#' , 'input' : '<C-O>dF[<BS>'})
+"
+" for op in ['<', '>', '+', '-', '/', '&', '%', '\*', '|']
+" 	call smartinput#define_rule({ 'char' : '<BS>' , 'at' : ' ' . op . ' \%#' , 'input' : '<BS><BS><BS>'})
+" endfor
+" "--------------------------------------------------------------
+" "Smartchr,SmartImput Config End
+" "--------------------------------------------------------------
