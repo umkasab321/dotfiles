@@ -1,5 +1,5 @@
-echo "日本語のホームディレクトリ下のディレクトリ名を英語に変更します(デスクトップ->Desktop)。"
-env LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
+#echo "日本語のホームディレクトリ下のディレクトリ名を英語に変更します(デスクトップ->Desktop)。"
+#env LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
 
 #./bashrc ./profileのバックアップを作る
 echo ".bashrcと.profileのバックアップを生成"
