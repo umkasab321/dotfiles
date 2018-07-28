@@ -1,4 +1,3 @@
-export PATH=$PATH:/usr/local/CrossPack-AVR/bin
 alias ls='ls -Ga'
 alias ll='ls -Gla'
 alias rm='rm -i'
