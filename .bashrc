@@ -4,6 +4,6 @@ alias ll='ls -Gla'
 alias rm='rm -i'
 cl(){
 	cd $1;
-	ls ;
+	ls;
 }
 alias cd='cl'
