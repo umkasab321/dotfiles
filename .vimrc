@@ -1,5 +1,7 @@
 set number
 set encoding=utf-8
+set fileencodings=sjis,euc-jp,utf-8
+set fileformat=unix,dos,mac
 set cursorline
 if has('win32')
     let ostype = "Win"
@@ -47,7 +49,6 @@ nnoremap ; :
 nnoremap fd <S-v>%zf
 nnoremap go :<C-u>call append(expand('.'), '')<Cr>j
 set tabstop=4
-set fileencodings=sjis,euc-jp,utf-8
 set mouse=a
 set ttymouse=xterm2
 
@@ -194,10 +195,10 @@ nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 "file_rec:!
 nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
 "Quit
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction"}}}
+" autocmd FileType unite call s:unite_my_settings()
+" function! s:unite_my_settings()"{{{
+"     nmap <buffer> <ESC> <Plug>(unite_exit)
+" endfunction"}}}
 
 "--------------------------------------------------------------
 "Smartchr,SmartImput Config
